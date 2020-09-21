@@ -5,6 +5,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Grid from '@material-ui/core/Grid';
 import { STATUSES } from '../../constants';
 import TaskList from '../../components/TaskList';
+import TaskForm from '../../components/TaskForm';
 
 const listTask = [
     {
@@ -28,6 +29,9 @@ const listTask = [
 ];
 
 class TaskBoard extends Component {
+    state = {
+        open: false
+    }
     renderBoard() {
         let xhtml = null;
         xhtml = (
@@ -44,14 +48,36 @@ class TaskBoard extends Component {
         );
         return xhtml;
     }
+
+    handleClose = () => {
+        this.setState({
+            open: false
+        });
+    }
+
+    openForm = () => {
+        this.setState({
+            open: true
+        })
+    }
+
+    renderForm(){
+        const { open } = this.state;
+        let xhtml = null;
+        xhtml = (
+            <TaskForm open={open} onClose={this.handleClose} />
+        )
+        return xhtml;
+    }
     render() {
         var {classes} = this.props;
         return (
             <div className={classes.taskboard}>
-                <Button variant="contained" color="primary" className={classes.button}>
+                <Button variant="contained" color="primary" className={classes.button} onClick={this.openForm}>
                     <AddIcon /> Add New Task
                 </Button>
                 {this.renderBoard()}
+                {this.renderForm()}
             </div>
         );
     }
