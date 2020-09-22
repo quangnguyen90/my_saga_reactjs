@@ -1,13 +1,13 @@
 const styles = () => ({
-    box: {
-        display: "flex",
-        alignItems: "center"
-    },
-    shape: {
-        padding: 20,
-        margin: 10,
-        backgroundColor: "cyan"
-    }
+  box: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  shape: {
+    padding: 20,
+    margin: 10,
+    backgroundColor: 'cyan',
+  },
 });
 
 export default styles;
