@@ -33,7 +33,17 @@ module.exports = {
     'no-param-reassign': 0,
     'import/no-useless-path-segments': 0,
     'import/prefer-default-export': 0,
-    'react/no-array-index-key': 0
+    'react/no-array-index-key': 0,
+    'react/jsx-uses-vars': 2,
+    'react/jsx-closing-bracket-location': 1,
+    'react/jsx-first-prop-new-line': 1,
+    'react/state-in-constructor': 1,
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
   },
   plugins: ['prettier'],
   env: {
