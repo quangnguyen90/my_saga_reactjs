@@ -11,27 +11,6 @@ import { STATUSES } from '../../constants';
 import * as taskActions from './../../actions/task';
 import styles from './styles';
 
-const listTask = [
-  {
-    id: 1,
-    title: 'Learn Frontend',
-    description: 'Learn ReactJS',
-    status: 0,
-  },
-  {
-    id: 2,
-    title: 'Learn Backend',
-    description: 'Learn NodeJS',
-    status: 2,
-  },
-  {
-    id: 3,
-    title: 'Learn Fullstack',
-    description: '',
-    status: 1,
-  },
-];
-
 class TaskBoard extends Component {
   state = {
     open: false,
@@ -39,8 +18,8 @@ class TaskBoard extends Component {
 
   componentDidMount() {
     const { taskActionCreator } = this.props;
-    const { fetchListTask } = taskActionCreator;
-    fetchListTask();
+    const { fetchListTaskRequest } = taskActionCreator;
+    fetchListTaskRequest();
   }
 
   handleClose = () => {
@@ -56,6 +35,7 @@ class TaskBoard extends Component {
   };
 
   renderBoard() {
+    const { listTask } = this.props;
     let xhtml = null;
     xhtml = (
       <Grid container spacing={2}>
@@ -101,11 +81,16 @@ class TaskBoard extends Component {
 TaskBoard.propTypes = {
   classes: PropTypes.object,
   taskActionCreator: PropTypes.shape({
-    fetchListTask: PropTypes.func,
+    fetchListTaskRequest: PropTypes.func,
   }),
+  listTask: PropTypes.array,
 };
 
-const mapStateToProps = null;
+const mapStateToProps = (state) => {
+  return {
+    listTask: state.task.listTask,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
