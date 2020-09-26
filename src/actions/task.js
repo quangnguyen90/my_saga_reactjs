@@ -32,17 +32,17 @@ export const fetchListTaskFail = (error) => {
  * Step3: fetchListTaskSuccess(data response)
  * Step4: fetchListTaskFail(error response)
  */
-export const fetchListTaskRequest = () => {
-  return (dispatch) => {
-    dispatch(fetchListTask());
-    taskApis
-      .getList()
-      .then((resp) => {
-        const { data } = resp;
-        dispatch(fetchListTaskSuccess(data));
-      })
-      .catch((error) => {
-        dispatch(fetchListTaskFail(error));
-      });
-  };
-};
+// export const fetchListTaskRequest = () => {
+//   return (dispatch) => {
+//     dispatch(fetchListTask());
+//     taskApis
+//       .getList()
+//       .then((resp) => {
+//         const { data } = resp;
+//         dispatch(fetchListTaskSuccess(data));
+//       })
+//       .catch((error) => {
+//         dispatch(fetchListTaskFail(error));
+//       });
+//   };
+// };

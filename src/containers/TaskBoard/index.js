@@ -17,9 +17,9 @@ class TaskBoard extends Component {
   };
 
   componentDidMount() {
-    const { taskActionCreator } = this.props;
-    const { fetchListTaskRequest } = taskActionCreator;
-    fetchListTaskRequest();
+    // const { taskActionCreator } = this.props;
+    // const { fetchListTask } = taskActionCreator;
+    // fetchListTask();
   }
 
   handleClose = () => {
@@ -59,10 +59,25 @@ class TaskBoard extends Component {
     return xhtml;
   }
 
+  loadData = () => {
+    const { taskActionCreator } = this.props;
+    const { fetchListTask } = taskActionCreator;
+    fetchListTask();
+  };
+
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.taskboard}>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          onClick={this.loadData}
+          style={{ marginRight: 10 }}
+        >
+          Load data
+        </Button>
         <Button
           variant="contained"
           color="primary"
@@ -81,7 +96,7 @@ class TaskBoard extends Component {
 TaskBoard.propTypes = {
   classes: PropTypes.object,
   taskActionCreator: PropTypes.shape({
-    fetchListTaskRequest: PropTypes.func,
+    fetchListTask: PropTypes.func,
   }),
   listTask: PropTypes.array,
 };
