@@ -1,8 +1,9 @@
-import { fork, take, call, put } from 'redux-saga/effects';
+import { fork, take, call, put, delay } from 'redux-saga/effects';
 import * as taskType from '../constants/task';
 import { getList } from '../apis/task';
 import { STATUS_CODE } from '../constants';
 import { fetchListTaskFail, fetchListTaskSuccess } from '../actions/task';
+import { hideLoading, showLoading } from '../actions/ui';
 
 /**
  * Step1: Implement action fetch task
@@ -19,6 +20,7 @@ function* watFetchListTaskAction() {
     yield take(taskType.FETCH_TASK);
     // ============= BLOCK ===================== //
     console.log('Watching fetch list task action');
+    yield put(showLoading());
     const resp = yield call(getList);
     // ============= BLOCK until Call done ===================== //
     console.log('resp', resp);
@@ -30,6 +32,8 @@ function* watFetchListTaskAction() {
       // dispatch action fetchListTaskFail
       yield put(fetchListTaskFail(data));
     }
+    yield delay(1000);
+    yield put(hideLoading());
   }
 }
 
