@@ -1,5 +1,3 @@
-import { capitalize } from '@material-ui/core';
-
 const styles = (theme) => ({
   modal: {
     top: '50%',
@@ -11,9 +9,6 @@ const styles = (theme) => ({
     boxShadow: theme.shadows[5],
     // padding: theme.spacing(2, 4, 4),
     outline: 'none',
-  },
-  textField: {
-    width: '100%',
   },
   header: {
     backgroundColor: theme.color.primary,
@@ -36,5 +31,4 @@ const styles = (theme) => ({
     padding: theme.spacing(2),
   },
 });
-
 export default styles;

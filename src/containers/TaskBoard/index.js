@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import SearchBox from '../../components/SearchBox';
-import TaskForm from '../../components/TaskForm';
+import TaskForm from '../TaskForm';
 import TaskList from '../../components/TaskList';
 import { STATUSES } from '../../constants';
 import * as taskActions from './../../actions/task';
@@ -39,6 +39,7 @@ class TaskBoard extends Component {
     } = modalActionCreator;
     showModal();
     changeModalTitle('Add New Task');
+    changeModalContent(<TaskForm />);
   };
 
   renderBoard() {
@@ -56,13 +57,6 @@ class TaskBoard extends Component {
         })}
       </Grid>
     );
-    return xhtml;
-  }
-
-  renderForm() {
-    const { open } = this.state;
-    let xhtml = null;
-    xhtml = <TaskForm open={open} onClose={this.handleClose} />;
     return xhtml;
   }
 
@@ -108,7 +102,6 @@ class TaskBoard extends Component {
         </Button>
         {this.renderSearchBox()}
         {this.renderBoard()}
-        {this.renderForm()}
       </div>
     );
   }
