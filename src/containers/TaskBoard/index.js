@@ -11,6 +11,7 @@ import TaskList from '../../components/TaskList';
 import { STATUSES } from '../../constants';
 import * as taskActions from './../../actions/task';
 import styles from './styles';
+import * as modalActions from './../../actions/modal';
 
 class TaskBoard extends Component {
   state = {
@@ -18,9 +19,9 @@ class TaskBoard extends Component {
   };
 
   componentDidMount() {
-    // const { taskActionCreator } = this.props;
-    // const { fetchListTask } = taskActionCreator;
-    // fetchListTask();
+    const { taskActionCreator } = this.props;
+    const { fetchListTask } = taskActionCreator;
+    fetchListTask();
   }
 
   handleClose = () => {
@@ -30,9 +31,14 @@ class TaskBoard extends Component {
   };
 
   openForm = () => {
-    this.setState({
-      open: true,
-    });
+    const { modalActionCreator } = this.props;
+    const {
+      showModal,
+      changeModalTitle,
+      changeModalContent,
+    } = modalActionCreator;
+    showModal();
+    changeModalTitle('Add New Task');
   };
 
   renderBoard() {
@@ -67,7 +73,10 @@ class TaskBoard extends Component {
   };
 
   handleFilter = (e) => {
-    console.log(e);
+    const { value } = e.target;
+    const { taskActionCreator } = this.props;
+    const { filterTask } = taskActionCreator;
+    filterTask(value);
   };
 
   renderSearchBox = () => {
@@ -109,6 +118,13 @@ TaskBoard.propTypes = {
   classes: PropTypes.object,
   taskActionCreator: PropTypes.shape({
     fetchListTask: PropTypes.func,
+    filterTask: PropTypes.func,
+  }),
+  modalActionCreator: PropTypes.shape({
+    showModal: PropTypes.func,
+    hideModal: PropTypes.func,
+    changeModalTitle: PropTypes.func,
+    changeModalContent: PropTypes.func,
   }),
   listTask: PropTypes.array,
 };
@@ -122,6 +138,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     taskActionCreator: bindActionCreators(taskActions, dispatch),
+    modalActionCreator: bindActionCreators(modalActions, dispatch),
   };
 };
 

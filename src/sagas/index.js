@@ -1,8 +1,21 @@
-import { fork, take, call, put, delay } from 'redux-saga/effects';
+import {
+  fork,
+  take,
+  call,
+  put,
+  delay,
+  takeLatest,
+  select,
+  // takeEvery,
+} from 'redux-saga/effects';
 import * as taskType from '../constants/task';
 import { getList } from '../apis/task';
 import { STATUS_CODE } from '../constants';
-import { fetchListTaskFail, fetchListTaskSuccess } from '../actions/task';
+import {
+  fetchListTaskFail,
+  fetchListTaskSuccess,
+  filterTaskSuccess,
+} from '../actions/task';
 import { hideLoading, showLoading } from '../actions/ui';
 
 /**
@@ -15,7 +28,7 @@ import { hideLoading, showLoading } from '../actions/ui';
  * Step4: Shutdown Loading
  * Step5: Implement other processes
  */
-function* watFetchListTaskAction() {
+function* watchFetchListTaskAction() {
   while (true) {
     yield take(taskType.FETCH_TASK);
     // ============= BLOCK ===================== //
@@ -37,13 +50,21 @@ function* watFetchListTaskAction() {
   }
 }
 
-function* watchCreateTaskAction() {
-  console.log('Watching create task action');
+function* filterTaskSaga({ payload }) {
+  yield delay(500);
+  console.log('Watching Filter Task');
+  const { keyword } = payload;
+  const list = yield select((state) => state.task.listTask);
+  const filteredTask = list.filter((task) =>
+    task.title.trim().toLowerCase().includes(keyword.trim().toLowerCase()),
+  );
+  yield put(filterTaskSuccess(filteredTask));
 }
 
 function* rootSaga() {
-  yield fork(watFetchListTaskAction);
-  yield fork(watchCreateTaskAction);
+  yield fork(watchFetchListTaskAction);
+  yield takeLatest(taskType.FILTER_TASK, filterTaskSaga);
+  // yield takeEvery(taskType.FILTER_TASK, filterTaskSaga);
 }
 
 export default rootSaga;
