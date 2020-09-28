@@ -18,9 +18,9 @@ class TaskBoard extends Component {
   };
 
   componentDidMount() {
-    // const { taskActionCreator } = this.props;
-    // const { fetchListTask } = taskActionCreator;
-    // fetchListTask();
+    const { taskActionCreator } = this.props;
+    const { fetchListTask } = taskActionCreator;
+    fetchListTask();
   }
 
   handleClose = () => {
