@@ -1,3 +1,5 @@
+import { capitalize } from '@material-ui/core';
+
 const styles = (theme) => ({
   modal: {
     top: '50%',
@@ -7,11 +9,31 @@ const styles = (theme) => ({
     width: 400,
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 4),
+    // padding: theme.spacing(2, 4, 4),
     outline: 'none',
   },
   textField: {
     width: '100%',
+  },
+  header: {
+    backgroundColor: theme.color.primary,
+    color: theme.color.textColor,
+    padding: theme.spacing(2),
+    display: 'flex',
+    alignItem: 'center',
+    justifyContent: 'space-between',
+  },
+  title: {
+    color: theme.color.textColor,
+    fontWeight: 700,
+    textTransform: 'capitalize',
+  },
+  icon: {
+    cursor: 'pointer',
+    fontSize: 30,
+  },
+  content: {
+    padding: theme.spacing(2),
   },
 });
 
