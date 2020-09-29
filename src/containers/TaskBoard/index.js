@@ -14,21 +14,11 @@ import styles from './styles';
 import * as modalActions from './../../actions/modal';
 
 class TaskBoard extends Component {
-  state = {
-    open: false,
-  };
-
   componentDidMount() {
     const { taskActionCreator } = this.props;
     const { fetchListTask } = taskActionCreator;
     fetchListTask();
   }
-
-  handleClose = () => {
-    this.setState({
-      open: false,
-    });
-  };
 
   openForm = () => {
     const { modalActionCreator } = this.props;
