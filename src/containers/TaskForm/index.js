@@ -1,12 +1,12 @@
 import { Box, Grid, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
 import * as modelActions from '../../actions/modal';
+import renderTextField from '../../components/FormHelper/TextField';
 import styles from './styles';
 
 class TaskForm extends Component {
@@ -21,24 +21,25 @@ class TaskForm extends Component {
       <form onSubmit={handleSubmit(this.handleSubmitForm)}>
         <Grid container>
           <Grid item md={12}>
-            <Field name="title" component="input" />
-          </Grid>
-          <Grid item md={12}>
-            <TextField
-              id="standard-name"
+            <Field
+              id="title"
               label="Title"
               className={classes.textField}
               margin="normal"
+              name="title"
+              component={renderTextField}
             />
           </Grid>
           <Grid item md={12}>
-            <TextField
-              id="standard-multiline-flexible"
+            <Field
+              id="description"
               label="Description"
               multiline
               className={classes.textField}
               rowsMax={4}
               margin="normal"
+              name="description"
+              component={renderTextField}
             />
           </Grid>
           <Grid item md={12}>

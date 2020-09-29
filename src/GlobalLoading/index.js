@@ -2,9 +2,8 @@ import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators, compose } from 'redux';
+import { compose } from 'redux';
 import loadingIcon from '../assets/images/loading.gif';
-import * as uiActions from './../actions/ui';
 import styles from './styles';
 
 class GlobalLoading extends Component {

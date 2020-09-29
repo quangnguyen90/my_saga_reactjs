@@ -39,6 +39,7 @@ module.exports = {
     'react/jsx-first-prop-new-line': 1,
     'react/state-in-constructor': 1,
     'react/sort-comp': 1,
+    'react/jsx-props-no-spreading': 1,
     'prettier/prettier': [
       'error',
       {
