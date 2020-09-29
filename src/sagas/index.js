@@ -6,17 +6,20 @@ import {
   delay,
   takeLatest,
   select,
-  // takeEvery,
+  takeEvery,
 } from 'redux-saga/effects';
 import * as taskType from '../constants/task';
-import { getList } from '../apis/task';
-import { STATUS_CODE } from '../constants';
+import { getList, addTask } from '../apis/task';
+import { STATUSES, STATUS_CODE } from '../constants';
 import {
+  addTaskFailed,
+  addTaskSuccess,
   fetchListTaskFail,
   fetchListTaskSuccess,
   filterTaskSuccess,
 } from '../actions/task';
 import { hideLoading, showLoading } from '../actions/ui';
+import { hideModal } from '../actions/modal';
 
 /**
  * Step1: Implement action fetch task
@@ -61,10 +64,29 @@ function* filterTaskSaga({ payload }) {
   yield put(filterTaskSuccess(filteredTask));
 }
 
+function* addTaskSaga({ payload }) {
+  const { title, description } = payload;
+  yield put(showLoading());
+  const resp = yield call(addTask, {
+    title,
+    description,
+    status: STATUSES[0].value,
+  });
+  const { data, status } = resp;
+  if (status === STATUS_CODE.CREATED) {
+    yield put(addTaskSuccess(data));
+    yield put(hideModal());
+  } else {
+    yield put(addTaskFailed(data));
+  }
+  yield delay(1000);
+  yield put(hideLoading());
+}
+
 function* rootSaga() {
   yield fork(watchFetchListTaskAction);
   yield takeLatest(taskType.FILTER_TASK, filterTaskSaga);
-  // yield takeEvery(taskType.FILTER_TASK, filterTaskSaga);
+  yield takeEvery(taskType.ADD_TASK, addTaskSaga);
 }
 
 export default rootSaga;
