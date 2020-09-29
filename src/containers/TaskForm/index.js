@@ -15,24 +15,14 @@ class TaskForm extends Component {
     console.log('data', data);
   };
 
-  required = (value) => {
-    let error = 'Please enter the title';
-    if (value !== null && typeof value !== 'undefined' && value.trim() !== '') {
-      error = null;
-    }
-    return error;
-  };
-
-  minLength5 = (value) => {
-    let error = null;
-    if (value.length < 5) {
-      error = 'Title must have at least 5 characters';
-    }
-    return error;
-  };
-
   render() {
-    const { classes, modalActionCreators, handleSubmit } = this.props;
+    const {
+      classes,
+      modalActionCreators,
+      handleSubmit,
+      invalid,
+      submitting,
+    } = this.props;
     const { hideModal } = modalActionCreators;
     return (
       <form onSubmit={handleSubmit(this.handleSubmitForm)}>
@@ -67,7 +57,12 @@ class TaskForm extends Component {
                 </Button>
               </Box>
               <Box>
-                <Button variant="contained" color="primary" type="submit">
+                <Button
+                  disabled={invalid || submitting}
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                >
                   Save
                 </Button>
               </Box>
@@ -85,6 +80,8 @@ TaskForm.propTypes = {
     hideModal: PropTypes.func,
   }),
   handleSubmit: PropTypes.func,
+  invalid: PropTypes.bool,
+  submitting: PropTypes.bool,
 };
 
 const mapStateToProps = null;
