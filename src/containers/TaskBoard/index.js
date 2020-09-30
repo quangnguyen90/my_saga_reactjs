@@ -48,9 +48,17 @@ class TaskBoard extends Component {
   };
 
   handleEditTask = (task) => {
-    const { taskActionCreator } = this.props;
+    const { taskActionCreator, modalActionCreator } = this.props;
     const { setTaskEditing } = taskActionCreator;
     setTaskEditing(task);
+    const {
+      showModal,
+      changeModalTitle,
+      changeModalContent,
+    } = modalActionCreator;
+    showModal();
+    changeModalTitle('Update Task');
+    changeModalContent(<TaskForm />);
   };
 
   renderBoard() {

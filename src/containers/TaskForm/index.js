@@ -26,6 +26,7 @@ class TaskForm extends Component {
       handleSubmit,
       invalid,
       submitting,
+      taskEditing,
     } = this.props;
     const { hideModal } = modalActionCreators;
     return (
@@ -39,6 +40,7 @@ class TaskForm extends Component {
               margin="normal"
               name="title"
               component={renderTextField}
+              value={taskEditing ? taskEditing.title : ''}
             />
           </Grid>
           <Grid item md={12}>
@@ -51,6 +53,7 @@ class TaskForm extends Component {
               margin="normal"
               name="description"
               component={renderTextField}
+              value={taskEditing ? taskEditing.description : ''}
             />
           </Grid>
           <Grid item md={12}>
@@ -89,9 +92,20 @@ TaskForm.propTypes = {
   handleSubmit: PropTypes.func,
   invalid: PropTypes.bool,
   submitting: PropTypes.bool,
+  taskEditing: PropTypes.object,
 };
 
-const mapStateToProps = null;
+const mapStateToProps = (state) => {
+  return {
+    taskEditing: state.task.taskEditing,
+    initialValues: {
+      title: state.task.taskEditing ? state.task.taskEditing.title : null,
+      description: state.task.taskEditing
+        ? state.task.taskEditing.description
+        : null,
+    },
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   modalActionCreators: bindActionCreators(modelActions, dispatch),
