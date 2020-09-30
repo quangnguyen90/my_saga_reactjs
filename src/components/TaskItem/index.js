@@ -12,7 +12,7 @@ import styles from './styles';
 
 class TaskItem extends Component {
   render() {
-    const { classes, task, status, onClickEdit } = this.props;
+    const { classes, task, status, onClickEdit, onClickDelete } = this.props;
     const { id, title } = task;
     return (
       <div>
@@ -43,6 +43,7 @@ class TaskItem extends Component {
               aria-label="Edit"
               className={classes.fab}
               size="small"
+              onClick={onClickDelete}
             >
               <Icon fontSize="small">delete_icon</Icon>
             </Fab>
@@ -58,6 +59,7 @@ TaskItem.propTypes = {
   task: PropTypes.object,
   status: PropTypes.object,
   onClickEdit: PropTypes.func,
+  onClickDelete: PropTypes.func,
 };
 
 export default withStyles(styles)(TaskItem);
