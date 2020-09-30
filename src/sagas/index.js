@@ -5,7 +5,7 @@ import {
   put,
   delay,
   takeLatest,
-  select,
+  // select,
   takeEvery,
 } from 'redux-saga/effects';
 import * as taskType from '../constants/task';
@@ -14,9 +14,10 @@ import { STATUSES, STATUS_CODE } from '../constants';
 import {
   addTaskFailed,
   addTaskSuccess,
+  fetchListTask,
   fetchListTaskFail,
   fetchListTaskSuccess,
-  filterTaskSuccess,
+  // filterTaskSuccess,
 } from '../actions/task';
 import { hideLoading, showLoading } from '../actions/ui';
 import { hideModal } from '../actions/modal';
@@ -33,11 +34,14 @@ import { hideModal } from '../actions/modal';
  */
 function* watchFetchListTaskAction() {
   while (true) {
-    yield take(taskType.FETCH_TASK);
+    // When fetch_task is awaken, code after this line will be implemented
+    const action = yield take(taskType.FETCH_TASK);
+    console.log('action', action);
+    const { params } = action.payload;
     // ============= BLOCK ===================== //
     console.log('Watching fetch list task action');
     yield put(showLoading());
-    const resp = yield call(getList);
+    const resp = yield call(getList, params);
     // ============= BLOCK until Call done ===================== //
     console.log('resp', resp);
     const { status, data } = resp;
@@ -55,13 +59,19 @@ function* watchFetchListTaskAction() {
 
 function* filterTaskSaga({ payload }) {
   yield delay(500);
-  console.log('Watching Filter Task');
   const { keyword } = payload;
-  const list = yield select((state) => state.task.listTask);
-  const filteredTask = list.filter((task) =>
-    task.title.trim().toLowerCase().includes(keyword.trim().toLowerCase()),
+  yield put(
+    fetchListTask({
+      q: keyword,
+    }),
   );
-  yield put(filterTaskSuccess(filteredTask));
+  // console.log('Watching Filter Task');
+  // const { keyword } = payload;
+  // const list = yield select((state) => state.task.listTask);
+  // const filteredTask = list.filter((task) =>
+  //   task.title.trim().toLowerCase().includes(keyword.trim().toLowerCase()),
+  // );
+  // yield put(filterTaskSuccess(filteredTask));
 }
 
 function* addTaskSaga({ payload }) {
