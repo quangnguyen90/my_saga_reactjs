@@ -1,4 +1,4 @@
-import { Box, Grid, withStyles } from '@material-ui/core';
+import { Box, Grid, MenuItem, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -7,6 +7,7 @@ import { bindActionCreators, compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
 import * as modelActions from '../../actions/modal';
 import * as taskActions from '../../actions/task';
+import renderSelectField from '../../components/FormHelper/Select';
 import renderTextField from '../../components/FormHelper/TextField';
 import styles from './styles';
 import validate from './validate';
@@ -19,6 +20,27 @@ class TaskForm extends Component {
     addTask(title, description);
   };
 
+  renderStatusSelection() {
+    let xhtml = null;
+    const { taskEditing, classes } = this.props;
+    if (taskEditing && taskEditing.id) {
+      xhtml = (
+        <Field
+          id="status"
+          label="Status"
+          className={classes.select}
+          name="status"
+          component={renderSelectField}
+        >
+          <MenuItem value={0}>Ready</MenuItem>
+          <MenuItem value={1}>In Progress</MenuItem>
+          <MenuItem value={2}>Complete</MenuItem>
+        </Field>
+      );
+    }
+    return xhtml;
+  }
+
   render() {
     const {
       classes,
@@ -26,7 +48,6 @@ class TaskForm extends Component {
       handleSubmit,
       invalid,
       submitting,
-      taskEditing,
     } = this.props;
     const { hideModal } = modalActionCreators;
     return (
@@ -40,7 +61,6 @@ class TaskForm extends Component {
               margin="normal"
               name="title"
               component={renderTextField}
-              value={taskEditing ? taskEditing.title : ''}
             />
           </Grid>
           <Grid item md={12}>
@@ -53,8 +73,10 @@ class TaskForm extends Component {
               margin="normal"
               name="description"
               component={renderTextField}
-              value={taskEditing ? taskEditing.description : ''}
             />
+          </Grid>
+          <Grid item md={12}>
+            {this.renderStatusSelection()}
           </Grid>
           <Grid item md={12}>
             <Box display="flex" flexDirection="row-reverse" mt={2}>
@@ -103,6 +125,7 @@ const mapStateToProps = (state) => {
       description: state.task.taskEditing
         ? state.task.taskEditing.description
         : null,
+      status: state.task.taskEditing ? state.task.taskEditing.status : null,
     },
   };
 };
