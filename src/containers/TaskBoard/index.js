@@ -6,12 +6,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import SearchBox from '../../components/SearchBox';
-import TaskForm from '../TaskForm';
 import TaskList from '../../components/TaskList';
 import { STATUSES } from '../../constants';
+import TaskForm from '../TaskForm';
+import * as modalActions from './../../actions/modal';
 import * as taskActions from './../../actions/task';
 import styles from './styles';
-import * as modalActions from './../../actions/modal';
 
 class TaskBoard extends Component {
   componentDidMount() {
@@ -32,24 +32,6 @@ class TaskBoard extends Component {
     changeModalContent(<TaskForm />);
   };
 
-  renderBoard() {
-    const { listTask } = this.props;
-    let xhtml = null;
-    xhtml = (
-      <Grid container spacing={2}>
-        {STATUSES.map((status) => {
-          const taskFiltered = listTask.filter(
-            (task) => task.status === status.value,
-          );
-          return (
-            <TaskList tasks={taskFiltered} status={status} key={status.value} />
-          );
-        })}
-      </Grid>
-    );
-    return xhtml;
-  }
-
   loadData = () => {
     const { taskActionCreator } = this.props;
     const { fetchListTask } = taskActionCreator;
@@ -62,6 +44,33 @@ class TaskBoard extends Component {
     const { filterTask } = taskActionCreator;
     filterTask(value);
   };
+
+  handleEditTask = (task) => {
+    console.log('Edit Task', task);
+  };
+
+  renderBoard() {
+    const { listTask } = this.props;
+    let xhtml = null;
+    xhtml = (
+      <Grid container spacing={2}>
+        {STATUSES.map((status) => {
+          const taskFiltered = listTask.filter(
+            (task) => task.status === status.value,
+          );
+          return (
+            <TaskList
+              tasks={taskFiltered}
+              status={status}
+              key={status.value}
+              onClickEdit={this.handleEditTask}
+            />
+          );
+        })}
+      </Grid>
+    );
+    return xhtml;
+  }
 
   renderSearchBox = () => {
     let xhtml = null;
