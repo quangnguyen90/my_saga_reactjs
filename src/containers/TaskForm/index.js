@@ -14,10 +14,14 @@ import validate from './validate';
 
 class TaskForm extends Component {
   handleSubmitForm = (data) => {
-    const { taskActionCreators } = this.props;
-    const { addTask } = taskActionCreators;
-    const { title, description } = data;
-    addTask(title, description);
+    const { taskActionCreators, taskEditing } = this.props;
+    const { addTask, updateTask } = taskActionCreators;
+    const { title, description, status } = data;
+    if (taskEditing && taskEditing.id) {
+      updateTask(title, description, status);
+    } else {
+      addTask(title, description);
+    }
   };
 
   renderStatusSelection() {
@@ -110,6 +114,7 @@ TaskForm.propTypes = {
   }),
   taskActionCreators: PropTypes.shape({
     addTask: PropTypes.func,
+    updateTask: PropTypes.func,
   }),
   handleSubmit: PropTypes.func,
   invalid: PropTypes.bool,
