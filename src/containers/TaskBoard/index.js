@@ -21,7 +21,9 @@ class TaskBoard extends Component {
   }
 
   openForm = () => {
-    const { modalActionCreator } = this.props;
+    const { modalActionCreator, taskActionCreator } = this.props;
+    const { setTaskEditing } = taskActionCreator;
+    setTaskEditing(null);
     const {
       showModal,
       changeModalTitle,
@@ -46,7 +48,9 @@ class TaskBoard extends Component {
   };
 
   handleEditTask = (task) => {
-    console.log('Edit Task', task);
+    const { taskActionCreator } = this.props;
+    const { setTaskEditing } = taskActionCreator;
+    setTaskEditing(task);
   };
 
   renderBoard() {
@@ -111,6 +115,7 @@ TaskBoard.propTypes = {
   taskActionCreator: PropTypes.shape({
     fetchListTask: PropTypes.func,
     filterTask: PropTypes.func,
+    setTaskEditing: PropTypes.func,
   }),
   modalActionCreator: PropTypes.shape({
     showModal: PropTypes.func,
