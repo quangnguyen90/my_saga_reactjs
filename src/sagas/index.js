@@ -9,11 +9,13 @@ import {
   takeEvery,
 } from 'redux-saga/effects';
 import * as taskType from '../constants/task';
-import { getList, addTask, updateTask } from '../apis/task';
+import { getList, addTask, updateTask, deleteTask } from '../apis/task';
 import { STATUSES, STATUS_CODE } from '../constants';
 import {
   addTaskFailed,
   addTaskSuccess,
+  deleteTaskFailed,
+  deleteTaskSuccess,
   fetchListTask,
   fetchListTaskFail,
   fetchListTaskSuccess,
@@ -115,11 +117,27 @@ function* updateTaskSaga({ payload }) {
   yield put(hideLoading());
 }
 
+function* deleteTaskSaga({ payload }) {
+  const { id } = payload;
+  yield put(showLoading());
+  const resp = yield call(deleteTask, id);
+  const { data, status: statusCode } = resp;
+  if (statusCode === STATUS_CODE.SUCCESS) {
+    yield put(deleteTaskSuccess(id));
+    yield put(hideModal());
+  } else {
+    yield put(deleteTaskFailed(data));
+  }
+  yield delay(1000);
+  yield put(hideLoading());
+}
+
 function* rootSaga() {
   yield fork(watchFetchListTaskAction);
   yield takeLatest(taskType.FILTER_TASK, filterTaskSaga);
   yield takeEvery(taskType.ADD_TASK, addTaskSaga);
   yield takeLatest(taskType.UPDATE_TASK, updateTaskSaga);
+  yield takeLatest(taskType.DELETE_TASK, deleteTaskSaga);
 }
 
 export default rootSaga;

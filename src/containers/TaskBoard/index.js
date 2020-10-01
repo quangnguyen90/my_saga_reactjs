@@ -62,7 +62,7 @@ class TaskBoard extends Component {
   };
 
   showModalDeleteTask = (task) => {
-    const { classes, taskActionCreator, modalActionCreator } = this.props;
+    const { classes, modalActionCreator } = this.props;
     const {
       showModal,
       hideModal,
@@ -98,7 +98,10 @@ class TaskBoard extends Component {
   };
 
   handleDeleteTask(task) {
-    console.log('Delete Task', task);
+    const { id } = task;
+    const { taskActionCreator } = this.props;
+    const { deleteTask } = taskActionCreator;
+    deleteTask(id);
   }
 
   renderBoard() {
@@ -165,6 +168,7 @@ TaskBoard.propTypes = {
     fetchListTask: PropTypes.func,
     filterTask: PropTypes.func,
     setTaskEditing: PropTypes.func,
+    deleteTask: PropTypes.func,
   }),
   modalActionCreator: PropTypes.shape({
     showModal: PropTypes.func,
