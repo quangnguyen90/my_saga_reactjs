@@ -40,6 +40,7 @@ module.exports = {
     'react/state-in-constructor': 1,
     'react/sort-comp': 1,
     'react/jsx-props-no-spreading': 1,
+    'import/no-cycle': 1,
     'prettier/prettier': [
       'error',
       {
