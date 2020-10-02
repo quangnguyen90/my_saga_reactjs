@@ -7,8 +7,7 @@ import styles from './styles';
 
 class AdminLayoutRoute extends Component {
   render() {
-    const { route } = this.props;
-    const { component: YourComponent, name, ...remainProps } = route;
+    const { component: YourComponent, ...remainProps } = this.props;
     return (
       <Route
         {...remainProps}
@@ -25,7 +24,9 @@ class AdminLayoutRoute extends Component {
 }
 
 AdminLayoutRoute.propTypes = {
-  route: PropTypes.object,
+  path: PropTypes.string,
+  exac: PropTypes.bool,
+  component: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 };
 
 export default withStyles(styles)(AdminLayoutRoute);

@@ -19,7 +19,15 @@ class App extends Component {
   renderAdminRoutes() {
     let xhtml = null;
     xhtml = ADMIN_ROUTES.map((route) => {
-      return <AdminLayoutRoute key={route.path} route={route} />;
+      return (
+        <AdminLayoutRoute
+          key={route.path}
+          path={route.path}
+          component={route.component}
+          exac={route.exac}
+          name={route.name}
+        />
+      );
     });
     return xhtml;
   }
