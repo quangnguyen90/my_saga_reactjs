@@ -12,6 +12,7 @@ import configureStore from '../../redux/configureStore';
 import styles from './styles';
 import { ADMIN_ROUTES } from '../../constants';
 import AdminLayoutRoute from '../../commons/Layout/AdminLayoutRoute';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 const store = configureStore();
 
@@ -37,10 +38,12 @@ class App extends Component {
       <Provider store={store}>
         <BrowserRouter>
           <ThemeProvider theme={theme}>
-            <ToastContainer />
-            <GlobalLoading />
-            <TaskModal />
-            <Switch>{this.renderAdminRoutes()}</Switch>
+            <CssBaseline>
+              <ToastContainer />
+              <GlobalLoading />
+              <TaskModal />
+              <Switch>{this.renderAdminRoutes()}</Switch>
+            </CssBaseline>
           </ThemeProvider>
         </BrowserRouter>
       </Provider>
