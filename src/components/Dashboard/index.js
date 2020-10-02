@@ -7,10 +7,10 @@ import Sidebar from './Sidebar';
 
 class Dashboard extends Component {
   render() {
-    const { classes, children } = this.props;
+    const { classes, children, name } = this.props;
     return (
       <div className={classes.dashboard}>
-        <Header />
+        <Header name={name} />
         <Sidebar />
         {children}
       </div>
@@ -21,6 +21,7 @@ class Dashboard extends Component {
 Dashboard.propTypes = {
   classes: PropTypes.object,
   children: PropTypes.object,
+  name: PropTypes.string,
 };
 
 export default withStyles(styles)(Dashboard);
