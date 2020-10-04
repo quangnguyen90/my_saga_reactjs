@@ -6,17 +6,11 @@ import { ADMIN_ROUTES } from '../../../constants';
 import styles from './styles';
 
 class Sidebar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: true,
-    };
-  }
-
   toggleDrawer = (value) => {
-    this.setState({
-      open: value,
-    });
+    const { onToggleSidebar } = this.props;
+    if (onToggleSidebar) {
+      onToggleSidebar(value);
+    }
   };
 
   renderList() {
@@ -47,11 +41,10 @@ class Sidebar extends Component {
   }
 
   render() {
-    const { open } = this.state;
-    const { classes } = this.props;
+    const { classes, openSidebar } = this.props;
     return (
       <Drawer
-        open={open}
+        open={openSidebar}
         onClose={() => this.toggleDrawer(false)}
         classes={{
           paper: classes.drawerPaper,
@@ -66,6 +59,8 @@ class Sidebar extends Component {
 
 Sidebar.propTypes = {
   classes: PropTypes.object,
+  openSidebar: PropTypes.bool,
+  onToggleSidebar: PropTypes.func,
 };
 
 export default withStyles(styles)(Sidebar);
