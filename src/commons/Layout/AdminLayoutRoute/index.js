@@ -25,7 +25,7 @@ class AdminLayoutRoute extends Component {
 
 AdminLayoutRoute.propTypes = {
   path: PropTypes.string,
-  exac: PropTypes.bool,
+  exact: PropTypes.bool,
   component: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 };
 

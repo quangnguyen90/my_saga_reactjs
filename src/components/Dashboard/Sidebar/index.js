@@ -1,6 +1,7 @@
 import { Drawer, List, ListItem, withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import { ADMIN_ROUTES } from '../../../constants';
 import styles from './styles';
 
@@ -26,9 +27,17 @@ class Sidebar extends Component {
         <List component="div">
           {ADMIN_ROUTES.map((item) => {
             return (
-              <ListItem key={item.path} className={classes.menuItem} button>
-                {item.name}
-              </ListItem>
+              <NavLink
+                to={item.path}
+                exact={item.exact}
+                className={classes.menuLink}
+                activeClassName={classes.menuLinkActive}
+                key={item.path}
+              >
+                <ListItem className={classes.menuItem} button>
+                  {item.name}
+                </ListItem>
+              </NavLink>
             );
           })}
         </List>

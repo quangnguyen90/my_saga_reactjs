@@ -25,7 +25,7 @@ class App extends Component {
           key={route.path}
           path={route.path}
           component={route.component}
-          exac={route.exac}
+          exact={route.exact}
           name={route.name}
         />
       );

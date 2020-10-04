@@ -26,15 +26,15 @@ export const STATUS_CODE = {
 
 export const ADMIN_ROUTES = [
   {
-    path: '/task-board',
-    name: 'Task Management',
-    exac: false,
-    component: TaskBoard,
-  },
-  {
     path: '/',
     name: 'Admin Page',
-    exac: true,
+    exact: true,
     component: AdminHomePage,
+  },
+  {
+    path: '/task-board',
+    name: 'Task Management',
+    exact: false,
+    component: TaskBoard,
   },
 ];

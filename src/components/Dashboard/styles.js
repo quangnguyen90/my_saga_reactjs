@@ -2,6 +2,7 @@ const styles = () => ({
   wrapper: {
     display: 'flex',
     flexDirection: 'row',
+    height: '100vh',
   },
   wrapperContent: {
     width: '100%',
