@@ -11,6 +11,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { FormName } from 'redux-form';
+import { withRouter } from 'react-router';
 import styles from './styles';
 
 const menuId = 'primary-search-account-menu';
@@ -42,6 +43,13 @@ class Header extends Component {
     }
   };
 
+  handleLogout = () => {
+    const { history } = this.props;
+    if (history) {
+      history.push('/login');
+    }
+  };
+
   renderMenu = () => {
     const { anchorEl } = this.state;
     const isMenuOpen = Boolean(anchorEl);
@@ -55,7 +63,7 @@ class Header extends Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleMenuClose}>Logout</MenuItem>
+        <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
       </Menu>
     );
   };
@@ -104,6 +112,7 @@ Header.propTypes = {
   name: PropTypes.string,
   openSidebar: PropTypes.bool,
   onToggleSidebar: PropTypes.func,
+  history: PropTypes.object,
 };
 
-export default withStyles(styles)(Header);
+export default withStyles(styles)(withRouter(Header));
