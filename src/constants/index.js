@@ -1,5 +1,6 @@
 import AdminHomePage from '../containers/AdminHomePage';
 import LoginPage from '../containers/LoginPage';
+import SignupPage from '../containers/SignupPage';
 import TaskBoard from '../containers/TaskBoard';
 
 export const API_ENDPOINT = 'http://localhost:3000';
@@ -46,5 +47,11 @@ export const USER_ROUTES = [
     name: 'Login',
     exact: true,
     component: LoginPage,
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    exact: true,
+    component: SignupPage,
   },
 ];
