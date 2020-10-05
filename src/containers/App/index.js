@@ -10,9 +10,10 @@ import TaskModal from '../../components/TaskModal';
 import GlobalLoading from '../../GlobalLoading';
 import configureStore from '../../redux/configureStore';
 import styles from './styles';
-import { ADMIN_ROUTES } from '../../constants';
+import { ADMIN_ROUTES, USER_ROUTES } from '../../constants';
 import AdminLayoutRoute from '../../commons/Layout/AdminLayoutRoute';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import DefaultLayoutRoute from '../../commons/Layout/DefaultLayoutRoute';
 
 const store = configureStore();
 
@@ -33,6 +34,22 @@ class App extends Component {
     return xhtml;
   }
 
+  renderDefaultRoutes() {
+    let xhtml = null;
+    xhtml = USER_ROUTES.map((route) => {
+      return (
+        <DefaultLayoutRoute
+          key={route.path}
+          path={route.path}
+          component={route.component}
+          exact={route.exact}
+          name={route.name}
+        />
+      );
+    });
+    return xhtml;
+  }
+
   render() {
     return (
       <Provider store={store}>
@@ -42,7 +59,10 @@ class App extends Component {
               <ToastContainer />
               <GlobalLoading />
               <TaskModal />
-              <Switch>{this.renderAdminRoutes()}</Switch>
+              <Switch>
+                {this.renderAdminRoutes()}
+                {this.renderDefaultRoutes()}
+              </Switch>
             </CssBaseline>
           </ThemeProvider>
         </BrowserRouter>
